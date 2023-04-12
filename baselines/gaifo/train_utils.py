@@ -15,9 +15,9 @@ import time
 import random
 import sys
 
-from dagger import get_env_and_model
-
-from gym_minigrid.wrappers import *
+from .dagger import get_env_and_model
+'''chera nist ???'''
+# from gym_minigrid.wrappers import *
 
 from stable_baselines3.common.env_util import make_atari_env
 from stable_baselines3.common.vec_env import VecFrameStack

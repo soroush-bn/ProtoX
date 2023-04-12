@@ -25,14 +25,17 @@ import cv2
 import gym
 import numpy as np
 import torch
+'''check for its installation'''
 from labml import monit, tracker, logger, experiment
 from torch import nn
 from torch import optim
 from torch.distributions import Categorical
 from torch.nn import functional as F
 from copy import deepcopy
-from dagger import *
-from src.env import create_train_env
+
+from baselines.viper.utils import get_saved_hyperparams, create_test_env
+from .dagger import *
+from mario_src.env import create_train_env
 from gym_super_mario_bros.actions import SIMPLE_MOVEMENT, COMPLEX_MOVEMENT, RIGHT_ONLY
 
 if torch.cuda.is_available():

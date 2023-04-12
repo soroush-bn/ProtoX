@@ -39,7 +39,9 @@ class ProtoIsoResNet(nn.Module):
         self.sim_method = sim_method
 
         print('THIS PROTOPNET IS USING SIM SCORES FOR LOGITS')
-
+        """supp: In order to facilitate encoding stacks of 4 greyscale images (instead of
+RGB images), we change the encoder’s first convolutional unit to accept 4 input channels and remove
+the last fully connected layer."""
         if not tl:
             resnet = models.resnet18(pretrained=False)
             resnet.conv1 = nn.Conv2d(4, 64, kernel_size=7, stride=2, padding=3, bias=False)
@@ -146,6 +148,11 @@ class ProtoIsoResNet(nn.Module):
 
         print('Setting incorrect weight strength due to positive linear!')
         self.set_last_layer_incorrect_connection(incorrect_strength=-.5)
+
+
+""" ino az https://github.com/julianstastny/VAE-ResNet18-PyTorch/blob/master/model.py 
+avorde
+"""
 
 
 class ResizeConv2d(nn.Module):

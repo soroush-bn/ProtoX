@@ -7,12 +7,12 @@ from ProtoX_Mario.utils import *
 from ProtoX_Mario.pytorchtools import EarlyStopping
 
 # from quadruplet import *
-
+import torch as th
 import torch.optim as optim
 from tqdm import tqdm
 import pandas as pd
 
-new_data = False
+new_data = True
 
 
 def data_generation_or_loading():
@@ -39,13 +39,31 @@ def data_generation_or_loading():
         step_labels = torch.FloatTensor(episode_schedule[:, 1]).to(device)
         DatasetWithInDices = dataset_with_indices(ExpertDataset)
         dset = DatasetWithInDices(expert_observations, expert_actions)
+    return expert_dataset,episode_labels,step_labels,dset
 
+
+def get_evaluation_data():
+    # get evaluation data
+    holdout_arrs = np.load('marioCROP_HOLDOUT.npz')
+    holdout_expert_observations = holdout_arrs['expert_observations']
+    holdout_color_observations = holdout_arrs['color_observations']
+    holdout_expert_actions = holdout_arrs['expert_actions']
+    holdout_episode_schedule = holdout_arrs['episode_schedule']
+
+    holdout_expert_dataset = ExpertDataset(holdout_expert_observations, holdout_expert_actions)
+
+    eval_loader = th.utils.data.DataLoader(
+        dataset=holdout_expert_dataset, batch_size=128, shuffle=False
+    )
 
 if __name__ == '__main__':
-    print("ipynb to py mario")
+    print("ipynb to py mario \n ---------------------------")
     if torch.cuda.is_available:
         device = "cuda:0"
         print('Using GPU')
     else:
         device = "cpu"
         print('using CPU')
+
+    expert_dataset, episode_labels, step_labels, dset = data_generation_or_loading()
+    print("finished")

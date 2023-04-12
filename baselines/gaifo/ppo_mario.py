@@ -33,8 +33,10 @@ from torch import optim
 from torch.distributions import Categorical
 from torch.nn import functional as F
 from copy import deepcopy
-from dagger import *
-from src.env import create_train_env
+
+from baselines.viper.utils import create_test_env, get_saved_hyperparams
+from .dagger import *
+from mario_src.env import create_train_env
 from gym_super_mario_bros.actions import SIMPLE_MOVEMENT, COMPLEX_MOVEMENT, RIGHT_ONLY
 
 if torch.cuda.is_available():

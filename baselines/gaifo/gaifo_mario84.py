@@ -1,5 +1,5 @@
-from src.env import create_train_env
-from src.model import PPO
+from mario_src.env import create_train_env
+from mario_src.ppo import PPO
 from gym_super_mario_bros.actions import SIMPLE_MOVEMENT, COMPLEX_MOVEMENT, RIGHT_ONLY
 
 import gym
@@ -13,10 +13,10 @@ from torch.utils.data.dataset import Dataset, random_split
 from tqdm import tqdm
 import numpy as np
 import random
-from dagger import *
+from .dagger import *
 #from trpo_atari import trpo
-from ppo_mario import *
-from train_utils import ExpertDataSet
+from .ppo_mario import *
+from .train_utils import ExpertDataSet
 
 from torch.distributions import Categorical
 
@@ -247,7 +247,7 @@ holdout_expert_actions = holdout_arrs['expert_actions']
 
 holdout_expert_dataset = ExpertDataSet(holdout_expert_observations, holdout_expert_actions)
 
-eval_loader = th.utils.data.DataLoader(
+eval_loader = torch.utils.data.DataLoader(
     dataset=holdout_expert_dataset, batch_size=128, shuffle=False
 )
 
@@ -330,7 +330,7 @@ def rollout(pi,n_eps=1000,max_len=10000,exp=False):
 
 expert_s, expert_sp = rollout(expert,exp=True)
 expert_dset = GAIFODataSet(expert_s, expert_sp)
-expert_loader = th.utils.data.DataLoader(
+expert_loader = torch.utils.data.DataLoader(
         dataset=expert_dset, batch_size=64, shuffle=True#, **kwargs,
 )
     
@@ -341,7 +341,7 @@ v_fids = []
 for i in tqdm(range(n_epochs)):
     agent_s, agent_sp = rollout(pi_v)
     agent_dset = GAIFODataSet(agent_s, agent_sp)
-    agent_loader = th.utils.data.DataLoader(
+    agent_loader = torch.utils.data.DataLoader(
         dataset=agent_dset, batch_size=64, shuffle=True#, **kwargs,
     )
     
