@@ -1,0 +1,11 @@
+karhayi ke ta inja anjam shod :
+
+1. fix kardan library ha baraye protox_mario (visualize.py not fixed yet)
+2. fix kardan moshkel version pyglet + time.clock -> time.time
+3. add kardan directory mario_src az repo github
+4. generate mario_holdout.npz
+
+_____________________________
+
+1. pickling error due to multi process = 8
+2. gpu mem error

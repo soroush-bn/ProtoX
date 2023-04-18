@@ -188,7 +188,6 @@ class BasicBlockEnc(nn.Module):
                 nn.Conv2d(in_planes, planes, kernel_size=1, stride=stride, bias=False),
                 nn.BatchNorm2d(planes)
             )
-
     def forward(self, x):
         out = torch.relu(self.bn1(self.conv1(x)))
         out = self.bn2(self.conv2(out))

@@ -4,7 +4,6 @@ import gc
 import numpy as np
 import torchvision
 from gym_super_mario_bros.actions import RIGHT_ONLY, SIMPLE_MOVEMENT, COMPLEX_MOVEMENT
-from skimage.transform import resize
 from PIL import Image
 import torch
 import torch.nn as nn
@@ -48,7 +47,8 @@ def crop_pong(obs):
     elif obs.shape[0] == 4:
         return obs[:, 10:84, :]
 
-
+def lambda_mapper(storage,loc):
+    return storage
 def gen_color_data(world=1,
                    stage=1,
 
@@ -75,7 +75,7 @@ def gen_color_data(world=1,
         model.cuda()
     else:
         model.load_state_dict(torch.load("{}/ppo_super_mario_bros_{}_{}".format(saved_path, world, stage),
-                                         map_location=lambda storage, loc: storage))
+                                         map_location= lambda_mapper))
     model.eval()
 
     state_shape = env.observation_space.shape
