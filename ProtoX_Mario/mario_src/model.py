@@ -16,7 +16,7 @@ class PPO(nn.Module):
         self.linear = nn.Linear(32 * 6 * 6, 512)
         self.critic_linear = nn.Linear(512, 1)
         self.actor_linear = nn.Linear(512, num_actions)
-        self.initialize_weights()
+        self._initialize_weights()
 
     def _initialize_weights(self):
         for module in self.modules():
